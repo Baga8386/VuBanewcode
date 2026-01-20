@@ -1,0 +1,15 @@
+D:\PhattrienPMQL\VuBanewcode\NewApp\bin\Debug\net10.0\NewApp.exe
+D:\PhattrienPMQL\VuBanewcode\NewApp\bin\Debug\net10.0\NewApp.deps.json
+D:\PhattrienPMQL\VuBanewcode\NewApp\bin\Debug\net10.0\NewApp.runtimeconfig.json
+D:\PhattrienPMQL\VuBanewcode\NewApp\bin\Debug\net10.0\NewApp.dll
+D:\PhattrienPMQL\VuBanewcode\NewApp\bin\Debug\net10.0\NewApp.pdb
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.AssemblyInfoInputs.cache
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.AssemblyInfo.cs
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.csproj.CoreCompileInputs.cache
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.sourcelink.json
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.dll
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\refint\NewApp.dll
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.pdb
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\NewApp.genruntimeconfig.cache
+D:\PhattrienPMQL\VuBanewcode\NewApp\obj\Debug\net10.0\ref\NewApp.dll
