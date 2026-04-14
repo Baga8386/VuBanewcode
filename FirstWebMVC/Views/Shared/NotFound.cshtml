@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Không tìm thấy";
+}
+
+<div class="container text-center mt-5">
+    @* Sử dụng các class của Bootstrap để tạo hiệu ứng thị giác tốt *@
+    <h1 class="display-1 text-danger fw-bold">404</h1>
+    <h2 class="mb-4">Rất tiếc! Dữ liệu bạn yêu cầu không tồn tại.</h2>
+    <p class="text-muted">Có thể sản phẩm này đã bị xóa hoặc đường dẫn không chính xác.</p>
+    
+    <a asp-controller="Product" asp-for="Index" class="btn btn-primary shadow">
+        <i class="bi bi-arrow-left-circle"></i> Quay lại danh sách sản phẩm
+    </a>
+</div>  

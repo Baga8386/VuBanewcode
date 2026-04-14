@@ -1,0 +1,32 @@
+@model FirstWebMVC.Models.Product
+
+<div class="container shadow p-4 mt-4">
+    <div class="row pb-2">
+        <h2 class="text-danger">Xác nhận xóa sản phẩm</h2>
+        <hr />
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên sản phẩm</label>
+            <input asp-for="Name" class="form-control" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Giá bán</label>
+            <input asp-for="Price" class="form-control" disabled />
+        </div>
+
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> 
+            Bạn có chắc chắn muốn xóa sản phẩm <strong>@Model.Name</strong> không? Hành động này không thể hoàn tác.
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-danger shadow-sm" style="width:150px">Xác nhận xóa</button>
+            <a asp-action="Index" class="btn btn-secondary shadow-sm" style="width:150px">Hủy bỏ</a>
+        </div>
+    </form>
+</div>

@@ -26,7 +26,7 @@ app.UseAuthorization();
 // 3. Cấu hình Route
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Product}/{action=Index}/{id?}");
 
 // 4. Lệnh chạy ứng dụng - LUÔN LUÔN NẰM CUỐI CÙNG
 app.Run();
