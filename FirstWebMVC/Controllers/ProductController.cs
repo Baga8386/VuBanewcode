@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using FirstWebMVC.Data;
 using FirstWebMVC.Models;
+using FirstWebMVC.Models.ViewModels; // Để dùng ProductVM
+using Microsoft.EntityFrameworkCore; // Quan trọng: Để dùng .Include()
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 
 namespace FirstWebMVC.Controllers
@@ -13,91 +16,114 @@ namespace FirstWebMVC.Controllers
         {
             _db = db;
         }
-        public IActionResult Index()
+
+        // --- INDEX: Hiển thị danh sách và Tìm kiếm ---
+        public IActionResult Index(string searchString)
         {
-            IEnumerable<Product> objProductList = _db.Products.ToList();
+            // Lấy danh sách sản phẩm kèm theo thông tin Category tương ứng
+            var products = _db.Products.Include(u => u.Category).AsQueryable();
+
+            // Logic tìm kiếm cho Buổi 12
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.Name.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            List<Product> objProductList = products.ToList();
             return View(objProductList);
         }
 
-
+        // --- CREATE (GET): Hiển thị form thêm mới ---
         public IActionResult Create()
         {
-            return View();
+            ProductVM productVM = new()
+            {
+                CategoryList = _db.Categories.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
 
+        // --- CREATE (POST): Lưu thiết bị mới ---
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Products.Add(obj);
-                _db.SaveChanges(); 
+                _db.Products.Add(obj.Product);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
+            // Nếu lỗi, load lại danh sách Category trước khi trả về View
+            obj.CategoryList = _db.Categories.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
             return View(obj);
         }
 
-
+        // --- EDIT (GET): Load dữ liệu cũ vào form sửa ---
         public IActionResult Edit(int? id)
         {
-            if (id == null || id == 0)
+            if (id == null || id == 0) return View("NotFound");
+
+            ProductVM productVM = new()
             {
-                return NotFound();
-            }
+                CategoryList = _db.Categories.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = _db.Products.Find(id)
+            };
 
-            var productFromDb = _db.Products.Find(id);
+            if (productVM.Product == null) return View("NotFound");
 
-            if (productFromDb == null)
-            {
-
-                return View("NotFound");
-            }
-
-            return View(productFromDb);
+            return View(productVM);
         }
 
-
+        // --- EDIT (POST): Lưu cập nhật ---
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Product obj)
+        public IActionResult Edit(ProductVM obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Products.Update(obj);
+                _db.Products.Update(obj.Product);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
 
-
+        // --- DELETE (GET): Xác nhận xóa ---
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
+            if (id == null || id == 0) return View("NotFound");
 
-            var productFromDb = _db.Products.Find(id);
+            // Dùng Include để hiện tên Danh mục ở trang xác nhận xóa
+            var productFromDb = _db.Products.Include(u => u.Category).FirstOrDefault(u => u.Id == id);
 
-            if (productFromDb == null)
-            {
-                return View("NotFound");
-            }
+            if (productFromDb == null) return View("NotFound");
 
             return View(productFromDb);
         }
 
+        // --- DELETE (POST): Thực hiện xóa ---
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
             var obj = _db.Products.Find(id);
-            if (obj == null)
-            {
-                return View("NotFound");
-            }
+            if (obj == null) return View("NotFound");
 
             _db.Products.Remove(obj);
             _db.SaveChanges();

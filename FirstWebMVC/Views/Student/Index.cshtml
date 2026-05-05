@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Import Sinh Viên";
+}
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4>Import dữ liệu từ Excel</h4>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Student" asp-action="Import" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Chọn file Excel (.xlsx)</label>
+                    <input type="file" name="file" class="form-control" accept=".xlsx" required />
+                </div>
+                <button type="submit" class="btn btn-success">Tải lên và Lưu vào DB</button>
+            </form>
+        </div>
+    </div>
+</div>

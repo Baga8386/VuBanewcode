@@ -1,0 +1,32 @@
+@model IEnumerable<FirstWebMVC.Models.Category>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Danh mục thiết bị</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-action="Create" class="btn btn-primary">Thêm danh mục mới</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Tên danh mục</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model) {
+                <tr>
+                    <td>@obj.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

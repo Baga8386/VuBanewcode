@@ -1,25 +1,54 @@
-@model FirstWebMVC.Models.Product
+@model FirstWebMVC.Models.ViewModels.ProductVM
 
 <form method="post">
     <div class="border p-3 mt-4">
-        <h2>Thêm sản phẩm mới</h2>
-        <div class="mb-3">
-            <label asp-for="Name">Tên sản phẩm</label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="row pb-2">
+            <h2 class="text-primary">Thêm sản phẩm mới</h2>
+            <hr />
         </div>
+
+        @* 1. Hiển thị tổng hợp các lỗi ở đầu Form *@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @* Tên sản phẩm *@
         <div class="mb-3">
-            <label asp-for="Price">Giá</label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
+            <label asp-for="Product.Name" class="ms-2">Tên sản phẩm</label>
+            <input asp-for="Product.Name" class="form-control" />
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-success">Lưu</button>
-        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+
+        @* Giá bán *@
+        <div class="mb-3">
+            <label asp-for="Product.Price" class="ms-2">Giá bán</label>
+            <input asp-for="Product.Price" class="form-control" />
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
+        </div>
+
+        @* Chọn danh mục *@
+        <div class="mb-3">
+            <label asp-for="Product.CategoryId" class="ms-2">Danh mục</label>
+            <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+                <option disabled selected>--Chọn danh mục--</option>
+            </select>
+            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-success form-control">Lưu</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-secondary border form-control">
+                    Quay lại
+                </a>
+            </div>
+        </div>
     </div>
 </form>
 
 @section Scripts {
     @{
+        @* 4. Script để Validate chạy ở phía Client *@
         <partial name="_ValidationScriptsPartial" />
     }
 }

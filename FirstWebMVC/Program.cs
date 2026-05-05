@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using FirstWebMVC.Data; 
+using FirstWebMVC.Data;
+using OfficeOpenXml; 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Cấu hình dịch vụ (Services) - Nằm sau 'builder' và TRƯỚC 'builder.Build()'
+
 builder.Services.AddControllersWithViews();
+            ExcelPackage.License.SetNonCommercialPersonal("SinhVienIT");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

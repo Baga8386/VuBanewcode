@@ -1,0 +1,60 @@
+@model FirstWebMVC.Models.ViewModels.ProductVM
+
+<form asp-action="Create" method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Lập Phiếu Nhập Kho</h2>
+            <hr />
+        </div>
+
+        <!-- Thông tin chung của phiếu -->
+        <div class="mb-3">
+            <label>Ngày nhập</label>
+            <input type="date" class="form-control" name="ImportDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <table class="table table-bordered" id="DetailsTable">
+            <thead>
+                <tr>
+                    <th>Thiết bị</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá nhập</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <select asp-for="Product.Id" asp-items="@Model.CategoryList" class="form-select">
+                            <option disabled selected>--Chọn thiết bị--</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="Quantity" class="form-control" /></td>
+                    <td><input type="number" name="Price" class="form-control" /></td>
+                    <td><button type="button" class="btn btn-danger" onclick="RemoveRow(this)">Xóa</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-success" onclick="AddRow()">Thêm thiết bị</button>
+        <button type="submit" class="btn btn-primary" style="width:150px">Lưu phiếu</button>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">Quay lại</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        function AddRow() {
+            var table = document.getElementById("DetailsTable").getElementsByTagName('tbody')[0];
+            var newRow = table.insertRow(table.rows.length);
+            newRow.innerHTML = table.rows[0].innerHTML; // Sao chép dòng đầu tiên
+        }
+
+        function RemoveRow(btn) {
+            var row = btn.parentNode.parentNode;
+            if (document.getElementById("DetailsTable").rows.length > 2) {
+                row.parentNode.removeChild(row);
+            }
+        }
+    </script>
+}
